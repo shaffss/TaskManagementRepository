@@ -1,3 +1,9 @@
+using Commons;
+using Commons.Models;
+using System.Globalization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 namespace TaskManagementRepository
 {
     internal static class Program
@@ -8,10 +14,11 @@ namespace TaskManagementRepository
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            string relativePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json");
+            string content = File.ReadAllText(relativePath);
+            Config config = JsonSerializer.Deserialize<Config>(content);
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.Run(new Form1(config));
         }
     }
 }
